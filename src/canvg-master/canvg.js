@@ -2643,9 +2643,10 @@
 				element.render(tempCtx);
 
 				// apply filters
-				for (var i=0; i<this.children.length; i++) {
-					this.children[i].apply(tempCtx, 0, 0, width + 2*px, height + 2*py);
-				}
+                //?????
+				//for (var i=0; i<this.children.length; i++) {
+				//	this.children[i].apply(tempCtx, 0, 0, width + 2*px, height + 2*py);
+				//}
 
 				// render on me
 				ctx.drawImage(c, 0, 0, width + 2*px, height + 2*py, x - px, y - py, width + 2*px, height + 2*py);

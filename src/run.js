@@ -4,7 +4,15 @@ var fs = require('fs');
 //
 //alert(result); // "foo bar baz"
 
-var inFile = 'canvg-master/canvg.js';
+var version = '2';
+if (version == '2') {
+    var inFile = 'canvg-master_v2.0/canvg.js';
+    var insertFlag = "if (typeof CanvasRenderingContext2D != \'undefined\')";//version 2
+} else {
+    var inFile = 'canvg-master/canvg.js';
+    var insertFlag = "})();";//version 1
+}
+
 var outFile = 'canvg2.js';
 
 var js = fs.readFileSync(inFile, 'utf8');
@@ -18,7 +26,7 @@ function insertAfter(match, str) {
     js = str1 + str + '\n' + str2;
 }
 
-function insertBefor(match, str){
+function insertBefor(match, str) {
     var index = js.indexOf(match);
     var str1 = js.substring(0, index);
     var str2 = js.substring(index);
@@ -27,12 +35,12 @@ function insertBefor(match, str){
 
 }
 
-function replaceAll(str1, str2){
+function replaceAll(str1, str2) {
     var pattern = new RegExp(str1.replace(".", "\\.").replace("(", "\\(").replace(")", "\\)").replace("\n", "\\\n").replace("\"", "\\\""), "g");
     js = js.replace(pattern, str2);
 }
 
-insertBefor('})();', fs.readFileSync('insert.code.js', 'utf8'));
+insertBefor(insertFlag, fs.readFileSync('insert.code.js', 'utf8'));
 
 var properties = {
     "textBaseline": false,
@@ -100,11 +108,11 @@ var properties = {
 };
 
 
-for(var name in properties){
-    if(properties[name]){
+for (var name in properties) {
+    if (properties[name]) {
         replaceAll('ctx.' + name + '(', 'ctx.' + name + '2(');
         replaceAll('tempCtx.' + name + '(', 'tempCtx.' + name + '2(');
-    }else{
+    } else {
         replaceAll('ctx.' + name, 'ctx.' + name + '2');
         replaceAll('tempCtx.' + name, 'tempCtx.' + name + '2');
     }

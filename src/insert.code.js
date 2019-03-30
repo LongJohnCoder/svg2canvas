@@ -95,6 +95,10 @@ function customCanvas(ctx, tempCtx) {
                 //.translate(0,0)
             } else if (name == 'scale' && arguments[0] == 1 && arguments[1] == 1) {
                 //.translate(0,0)
+            } else if (name == 'setLineDash') {
+                appendCode('' + ctxName + '.' + name + '([' + param + ']);\n', this);
+            //} else if (name == 'drawImage') {
+            //    appendCode('' + ctxName + '.' + name + '([' + param + ']);\n', this);
             } else {
                 appendCode('' + ctxName + '.' + name + '(' + param + ');\n', this);
             }
@@ -159,7 +163,7 @@ function customCanvas(ctx, tempCtx) {
 
 
 var oldCanvg = canvg;
-this.canvg = function (target, s, opts) {
+canvg = function (target, s, opts) {
     if (!(typeof s == 'string')) {
         return;
     }
